@@ -16,18 +16,28 @@ const UserContext = ({children}) => {
         const result=await axios.post(`${serverUrl}/api/user/current`,{},{withCredentials:true});
 
         setUserdata(result?.data);
-        console.log(result?.data);
+        // console.log(result?.data);
       }catch(err){
         console.log("Current user error", err.response?.data || err.message);
       }
     }
 
+    const getGeminiResponse= async(command)=>{
+      try{
+        const result= await axios.post(`${serverUrl}/api/user/asktoassistant`,
+          {command},{withCredentials:true})
+          return result?.data;
+      }catch(err){
+        console.log(err);
+      }
+    }
+
+
     useEffect(()=>{
       handleCurrentUser();
     },[])
 
-
-    const value={serverUrl,userData,setUserdata,frontendImg,setFrontendImg,backendImg,setBackendImg,selectedImage,setSelectedImage}
+    const value={serverUrl,userData,setUserdata,frontendImg,setFrontendImg,backendImg,setBackendImg,selectedImage,setSelectedImage,getGeminiResponse}
   return (
     <div>
         <userDataContext.Provider value={value} >

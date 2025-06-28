@@ -2,8 +2,9 @@ import React from 'react'
 import { userDataContext } from '../context/userContext'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 const Home = () => {
-  const {serverUrl,userData,setUserdata}= useContext(userDataContext);
+  const {serverUrl,userData,setUserdata,getGeminiResponse}= useContext(userDataContext);
   const navigate= useNavigate();
 
   const handleLogout= async(req)=>{
@@ -15,6 +16,24 @@ const Home = () => {
       console.log(err);
     }
   }
+
+  useEffect(()=>{
+    const speechReconisation = window.SpeechRecognitionAlternative || window.webkitSpeechRecognition;
+    const recognition= new speechReconisation();
+    recognition.continuous=true;
+    recognition.lang='en-US'
+    
+    recognition.onresult= async (e)=>{
+      const transcript=e.results[e.results.length-1][0].transcript.trim();
+      console.log("heard :"+ transcript);
+
+      if(transcript.toLowerCase().includes(userData.assistantName.toLowerCase())){
+        const data= await getGeminiResponse(transcript);
+        console.log(data);
+      }else console.log("pronounce assistantName correctly")
+    }
+    recognition.start();
+  },[]);
 
 
 
