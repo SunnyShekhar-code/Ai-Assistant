@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 export const userDataContext= createContext();
 
 const UserContext = ({children}) => {
-    const serverUrl="http://localhost:5000"
+    const serverUrl="https://ai-assistant-backend-9ynm.onrender.com"
     const [userData,setUserdata]= useState(null);
     const [frontendImg,setFrontendImg]=useState(null);
     const [backendImg,setBackendImg]=useState(null);
