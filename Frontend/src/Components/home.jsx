@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import listen from "../assets/listen.gif"
 import voice from "../assets/voice.gif"
-import AI from "../assets/AI.gif"
+import AI from "../assets/ai.gif"
 import { MdOutlineMenu } from "react-icons/md"
 import { ImCross } from "react-icons/im"
 
