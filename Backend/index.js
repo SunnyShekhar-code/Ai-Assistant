@@ -25,9 +25,26 @@ app.use("/api/user",userRoute);
 
 
 
-const PORT=process.env.PORT || 5000;
-app.listen(PORT,async()=>{
-    await dbConnect();
-    console.log(`Server are running at port ${PORT}`);
+// const PORT=process.env.PORT || 5000;
+// app.listen(PORT,async()=>{
+//     await dbConnect();
+//     console.log(`Server are running at port ${PORT}`);
     
-});
+// });
+
+const PORT = process.env.PORT || 5000;
+
+const startServer = async () => {
+  try {
+    await dbConnect();                 // ✅ connect first
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error("Failed to start server:", err);
+    process.exit(1);
+  }
+};
+
+startServer();
+
